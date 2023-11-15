@@ -1,0 +1,155 @@
+{% extends "quoteapp/base.html" %}
+
+{% block content %}
+
+<div class="row header-box mb-3 mt-3">
+    <div class="col-md-8">
+        <h1>
+            <a href="/" style="text-decoration: none">Quotes</a>
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        {% if tag %}
+            <h3>Viewing tag: <a href="/tag/{{ tag }}">{{ tag }}</a></h3>
+        {% endif %}
+        {% for quote in quotes %}
+            <div class="card mb-3" style="width: 60rem;">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ quote.author.fullname }}
+                    <a href="/author/{{ quote.author.fullname }}">(about)</a>
+                    </h6>
+                    <p class="card-text">{{ quote.quote }}</p>
+                    <div class="tags">
+                        Tags:
+                        {% for tag in quote.tags.all %}
+                            <a class="tag" href="/tag/{{ tag.name }}/">{{tag.name}} | </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="col-md-3 ms-auto">
+        <h2>Top Ten tags</h2>
+        {% for tag in top_tags %}
+            <span class="tag-item">
+                <a class="tag" style="font-size: {% cycle '28' '26' '26' '24' '22' '14' '10' '8' '8' '6' %}px" href="/tag/{{ tag.name }}">{{ tag.name }}</a>
+            </span>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="col-md-8">
+    <nav>
+        <ul class="pager">
+            <li class="previous">
+                <a class="{% if not quotes.has_previous %} disabled {% endif %}"
+                   href="{% if quotes.has_previous %} {% url 'quoteapp:main_paginate' quotes.previous_page_number %} {% else %} # {% endif %}">
+                    <span aria-hidden="true">←</span> Previous
+                </a>
+            </li>
+            <li class="next">
+                <a class="{% if not quotes.has_next %} disabled {% endif %}"
+                   href="{% if quotes.has_next %} {% url 'quoteapp:main_paginate' quotes.next_page_number %} {% else %} # {% endif %}">
+                    Next <span aria-hidden="true">→</span></a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<!--<div class="row header-box mb-3 mt-3">-->
+<!--    <div class="col-md-8">-->
+<!--        <h1>-->
+<!--            <a href="/" style="text-decoration: none">Quotes</a>-->
+<!--        </h1>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<!--<div class="row">-->
+<!--    <div class="col-md-12 tags-box">-->
+<!--        <h2>Top Ten tags</h2>-->
+<!--        {% for tag in top_tags %}-->
+<!--        <span class="tag-item">-->
+<!--            <a class="tag" style="font-size: {% cycle '28' '26' '26' '24' '22' '14' '10' '8' '8' '6' %}px" href="/tag/{{ tag.name }}">{{ tag.name }}</a>-->
+<!--            </span>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+<!--    {% if tag %}-->
+<!--    <h3>Viewing tag: <a href="/tag/{{ tag }}">{{ tag }}</a></h3>-->
+<!--    {% endif %}-->
+<!--    {% for quote in quotes %}-->
+<!--    <div class="card mb-3" style="width: 60rem;">-->
+<!--        <div class="card-body">-->
+<!--            <h6 class="card-subtitle mb-2 text-body-secondary">{{ quote.author.fullname }}-->
+<!--            <a href="/author/{{ quote.author.fullname }}">(about)</a>-->
+<!--            </h6>-->
+<!--            <p class="card-text">{{ quote.quote }}</p>-->
+<!--            <div class="tags">-->
+<!--                Tags:-->
+<!--                {% for tag in quote.tags.all %}-->
+<!--                <a class="tag" href="/tag/{{ tag.name }}/">{{tag.name}} | </a>-->
+<!--                {% endfor %}-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    {% endfor %}-->
+
+
+<!--    <div class="col-md-8">-->
+<!--        <nav>-->
+<!--            <ul class="pager">-->
+
+<!--                <li class="previous">-->
+<!--                    <a class="{% if not quotes.has_previous %} disabled {% endif %}"-->
+<!--                       href="{% if quotes.has_previous %} {% url 'quoteapp:main_paginate' quotes.previous_page_number %} {% else %} # {% endif %}">-->
+<!--                        <span aria-hidden="true">←</span> Previous-->
+<!--                    </a>-->
+<!--                </li>-->
+
+
+<!--                <li class="next">-->
+<!--                    <a class="{% if not quotes.has_next %} disabled {% endif %}"-->
+<!--                       href="{% if quotes.has_next %} {% url 'quoteapp:main_paginate' quotes.next_page_number %} {% else %} # {% endif %}">-->
+<!--                        Next <span aria-hidden="true">→</span></a>-->
+<!--                </li>-->
+
+<!--            </ul>-->
+<!--        </nav>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+
+{% endblock %}
+
+<style>
+    .top-tags {
+        float: right;
+        margin-right: 0;
+    }
+
+    /* Стилі для заголовку сторінки */
+    .header-box h1 {
+        text-decoration: none;
+    }
+
+    /* Стилі для заголовку "Viewing tag" */
+    h3 a {
+        text-decoration: none;
+    }
+
+    /* Стилі для тегів */
+    .tag {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    /* Стилі для картки цитати */
+    .card {
+        margin: 10px 0;
+    }
+</style>

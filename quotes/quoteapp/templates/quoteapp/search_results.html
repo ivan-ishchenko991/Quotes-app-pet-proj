@@ -1,0 +1,46 @@
+{% extends "quoteapp/base.html" %}
+
+{% block content %}
+  <h1>Search Results</h1>
+  <p>You searched for: "{{ query }}"</p>
+
+<!--  {% if results %}-->
+<!--    <ul>-->
+<!--      {% for quote in results %}-->
+<!--        <li>-->
+<!--          {{ quote.author.fullname }}: "{{ quote.quote }}"-->
+<!--        </li>-->
+<!--      {% endfor %}-->
+<!--    </ul>-->
+<!--  {% else %}-->
+<!--    <p>No results found.</p>-->
+<!--  {% endif %}-->
+<div class="row">
+    <div class="col-md-8">
+        {% for quote in results %}
+            <div class="card mb-3" style="width: 60rem;">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ quote.author.fullname }}
+                    <a href="/author/{{ quote.author.fullname }}">(about)</a>
+                    </h6>
+                    <p class="card-text">{{ quote.quote }}</p>
+                    <div class="tags">
+                        Tags:
+                        {% for tag in quote.tags.all %}
+                            <a class="tag" href="/tag/{{ tag.name }}/">{{tag.name}} | </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="col-md-3 ms-auto">
+        <h2>Top Ten tags</h2>
+        {% for tag in top_tags %}
+            <span class="tag-item">
+                <a class="tag" style="font-size: {% cycle '28' '26' '26' '24' '22' '14' '10' '8' '8' '6' %}px" href="/tag/{{ tag.name }}">{{ tag.name }}</a>
+            </span>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

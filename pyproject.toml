@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "homework10"
+version = "0.1.0"
+description = ""
+authors = ["ivan-ishchenko991 <lvan.lshchenko19.01@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.2.5"
+psycopg2 = "^2.9.7"
+pymongo = "^4.5.0"
+django-environ = "^0.11.2"
+pillow = "^10.1.0"
+gunicorn = "^21.2.0"
+
+
+[tool.poetry.group.dev.dependencies]
+sphinx = "^7.2.6"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
